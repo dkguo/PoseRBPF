@@ -1079,6 +1079,8 @@ class PoseRBPF:
         rois = np.zeros((0, 7), dtype=np.float32)
         poses = np.zeros((0, 7), dtype=np.float32)
         for i in range(len(self.instance_list)):
+            if not self.rbpf_ok_list[i]:
+                continue
             roi = np.zeros((1, 7), dtype=np.float32)
             roi[0, :6] = self.rbpf_list[i].roi
             roi[0, 6] = self.rbpf_list[i].max_sim_all

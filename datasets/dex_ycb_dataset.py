@@ -105,7 +105,7 @@ class dex_ycb_dataset(data.Dataset):
     def __init__(self, setup, split, obj_list):
         self._setup = setup
         self._split = split
-        self._color_format = "color_{:06d}.jpg"
+        self._color_format = "color_{:06d}.png"
         self._depth_format = "aligned_depth_to_color_{:06d}.png"
         self._label_format = "labels_{:06d}.npz"
         self._height = 480
@@ -133,7 +133,7 @@ class dex_ycb_dataset(data.Dataset):
         self._num_classes_all = len(self._classes_all)
         self._class_colors_all = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (255, 0, 255), (0, 255, 255), \
                               (128, 0, 0), (0, 128, 0), (0, 0, 128), (128, 128, 0), (128, 0, 128), (0, 128, 128), \
-                              (64, 0, 0), (0, 64, 0), (0, 0, 64), (64, 64, 0), (64, 0, 64), (0, 64, 64), 
+                              (64, 0, 0), (0, 64, 0), (0, 0, 64), (64, 64, 0), (64, 0, 64), (0, 64, 64),
                               (192, 0, 0), (0, 192, 0), (0, 0, 192)]
         self._extents_all = self._load_object_extents()
         self._posecnn_class_indexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21]
@@ -332,7 +332,7 @@ class dex_ycb_dataset(data.Dataset):
         return sample
 
 
-    def _get_image_blob(self, color_file, depth_file):    
+    def _get_image_blob(self, color_file, depth_file):
 
         # rgba
         rgba = cv2.imread(color_file, cv2.IMREAD_UNCHANGED)
@@ -399,7 +399,7 @@ class dex_ycb_dataset(data.Dataset):
                 x2d = np.matmul(intrinsic_matrix, np.matmul(RT, x3d))
                 x2d[0, :] = np.divide(x2d[0, :], x2d[2, :])
                 x2d[1, :] = np.divide(x2d[1, :], x2d[2, :])
-        
+
                 gt_boxes[i, 0] = np.min(x2d[0, :])
                 gt_boxes[i, 1] = np.min(x2d[1, :])
                 gt_boxes[i, 2] = np.max(x2d[0, :])
